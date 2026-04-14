@@ -8,6 +8,20 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async getUsers() {
+    return await this.prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        createdAt: true,
+      },
+    });
+  }
+
+  async getUser(id: string) {
+    return await this.prisma.user.findUnique({ where: { id } });
+  }
+
   async createUser(createUserDto: CreateUserDto) {
     if (createUserDto.password !== createUserDto.confirmPassword)
       throw new HttpException('Passwords do not match', HttpStatus.BAD_REQUEST);

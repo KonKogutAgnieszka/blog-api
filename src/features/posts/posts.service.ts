@@ -10,6 +10,10 @@ export class PostsService {
     return this.prisma.post.findMany();
   }
 
+  async getPost(id: string) {
+    return await this.prisma.post.findUnique({ where: { id } });
+  }
+
   async createPost(createPostDto: CreatePostDto) {
     return await this.prisma.post.create({
       data: createPostDto,
