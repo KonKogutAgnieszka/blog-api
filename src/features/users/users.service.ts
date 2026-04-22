@@ -22,6 +22,10 @@ export class UsersService {
     return await this.prisma.user.findUnique({ where: { id } });
   }
 
+  async findByEmail(email: string) {
+    return await this.prisma.user.findUnique({ where: { email } });
+  }
+
   async createUser(createUserDto: CreateUserDto) {
     if (createUserDto.password !== createUserDto.confirmPassword)
       throw new HttpException('Passwords do not match', HttpStatus.BAD_REQUEST);
