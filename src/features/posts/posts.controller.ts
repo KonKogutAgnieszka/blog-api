@@ -10,6 +10,8 @@ import {
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './create-post.dto';
 import { UpdatePostDto } from './update-post.dto';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('posts')
 export class PostsController {
@@ -24,11 +26,13 @@ export class PostsController {
     return await this.postsService.getPost(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async createPost(@Body() createPostDto: CreatePostDto) {
     return await this.postsService.createPost(createPostDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async updatePost(
     @Param('id') id: string,
@@ -37,6 +41,7 @@ export class PostsController {
     return await this.postsService.updatePost(id, updatePostDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async deletePost(@Param('id') id: string) {
     return await this.postsService.deletePost(id);
