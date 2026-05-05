@@ -15,9 +15,17 @@ export class PostsService {
     return await this.prisma.post.findUnique({ where: { id } });
   }
 
-  async createPost(createPostDto: CreatePostDto) {
+  async createPost(createPostDto: CreatePostDto & { authorId: string }) {
+    const { authorId, ...data } = createPostDto;
     return await this.prisma.post.create({
-      data: createPostDto,
+      data: {
+        ...data,
+        author: {
+          connect: {
+            id: authorId,
+          },
+        },
+      },
     });
   }
 

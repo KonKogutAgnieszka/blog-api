@@ -5,5 +5,4 @@ export class CreatePostDto {
   coverImage!: string;
   content!: string;
   published!: boolean;
-  authorId!: string;
 }
