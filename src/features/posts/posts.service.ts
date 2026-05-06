@@ -8,7 +8,9 @@ export class PostsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAllPosts() {
-    return this.prisma.post.findMany();
+    return this.prisma.post.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   async getPost(id: string) {
